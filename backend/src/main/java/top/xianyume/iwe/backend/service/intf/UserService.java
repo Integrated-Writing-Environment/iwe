@@ -1,16 +1,20 @@
 package top.xianyume.iwe.backend.service.intf;
 
+import top.xianyume.iwe.backend.model.dto.UserLoginDTO;
+import top.xianyume.iwe.backend.model.dto.UserUpdateDTO;
 import top.xianyume.iwe.backend.model.entity.User;
 import top.xianyume.iwe.backend.model.vo.UserInfoVO;
 
 import java.util.List;
 
 public interface UserService {
-    Boolean login(User user, String password);
+    Boolean login(UserLoginDTO user, String password);
     void logout();
-    void signUp(User user);
-    void update(User user);
-    void updatePassword(User user, String newPassword);
-    UserInfoVO info(User user);
+    void sign(UserLoginDTO user);
+    void update(UserUpdateDTO user);
+    void updatePassword(Integer id, String newPassword);
+    void updateAvatar(Integer id, String avatar);
+    UserInfoVO infoById(Integer id);
+    UserInfoVO infoByUsername(String username);
     List<UserInfoVO> page(UserInfoVO user, int offset, int size);
 }

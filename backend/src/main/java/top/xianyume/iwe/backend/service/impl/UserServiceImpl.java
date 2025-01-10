@@ -1,7 +1,13 @@
 package top.xianyume.iwe.backend.service.impl;
 
+import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.BeanUtils;
 import org.springframework.stereotype.Service;
 import top.xianyume.iwe.backend.mapper.UserMapper;
+import top.xianyume.iwe.backend.model.dto.UserLoginDTO;
+import top.xianyume.iwe.backend.model.dto.UserUpdateDTO;
 import top.xianyume.iwe.backend.model.entity.User;
 import top.xianyume.iwe.backend.model.vo.UserInfoVO;
 import top.xianyume.iwe.backend.service.intf.UserService;
@@ -17,33 +23,59 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean login(User user, String password) {
-        return null;
+    public Boolean login(UserLoginDTO user, String password) {
+        User userFromDb = userMapper.selectOne(new QueryWrapper<User>()
+                .eq("uk_username", user.getUsername())
+        );
+        if (userFromDb == null) {
+            return false;
+        }
+        return userFromDb.getPassword().equals(password);
     }
 
     @Override
     public void logout() {
+        StpUtil.logout();
+    }
+
+    @Override
+    public void sign(UserLoginDTO user) {
 
     }
 
     @Override
-    public void signUp(User user) {
+    public void update(UserUpdateDTO user) {
 
     }
 
     @Override
-    public void update(User user) {
+    public void updatePassword(Integer id, String newPassword) {
 
     }
 
     @Override
-    public void updatePassword(User user, String newPassword) {
+    public void updateAvatar(Integer id, String avatar) {
 
     }
 
     @Override
-    public UserInfoVO info(User user) {
-        return null;
+    public UserInfoVO infoById(Integer id) {
+        User userFromDb = userMapper.selectOne(new QueryWrapper<User>()
+                .eq("pk_id", id)
+        );
+        UserInfoVO userInfo = new UserInfoVO();
+        BeanUtil.copyProperties(userFromDb, userInfo);
+        return userInfo;
+    }
+
+    @Override
+    public UserInfoVO infoByUsername(String username) {
+        User userFromDb = userMapper.selectOne(new QueryWrapper<User>()
+                .eq("uk_username", username)
+        );
+        UserInfoVO userInfo = new UserInfoVO();
+        BeanUtil.copyProperties(userFromDb, userInfo);
+        return userInfo;
     }
 
     @Override

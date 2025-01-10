@@ -14,4 +14,13 @@ public class User{
     private String username;
     @TableField("uk_nickname")
     private String nickname;
+    @TableField("pwd")
+    private String password;
+    private String description;
+    private String phone;
+    private String email;
+    private String idNumber;
+    private String createTime;
+    private String updateTime;
+
 }
