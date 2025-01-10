@@ -1,9 +1,9 @@
 package top.xianyume.iwe.backend.service.impl;
 
-import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.RandomUtil;
+import cn.hutool.crypto.digest.DigestUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.BeanUtils;
 import org.springframework.stereotype.Service;
 import top.xianyume.iwe.backend.mapper.UserMapper;
 import top.xianyume.iwe.backend.model.dto.UserLoginDTO;
@@ -35,12 +35,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void logout() {
-        StpUtil.logout();
+
     }
 
     @Override
     public void sign(UserLoginDTO user) {
+        String password = DigestUtil.md5Hex(user.getPassword());
+        String randomString = RandomUtil.randomString(10);
 
+        User userNew = new User();
+        userNew.setUsername(user.getUsername());
+        userNew.setPassword(password);
+        userNew.setNickname("用户_" + randomString);
+
+        userMapper.insert(userNew);
     }
 
     @Override

@@ -1,3 +1,5 @@
+server:
+  port: 8080
 spring:
   application:
     name: "backend"
@@ -31,4 +33,4 @@ sa-token:
   # token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
   token-style: uuid
   # 是否输出操作日志
-  is-log: true
+  is-log: false
