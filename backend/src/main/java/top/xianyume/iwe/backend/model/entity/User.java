@@ -1,5 +1,6 @@
 package top.xianyume.iwe.backend.model.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -8,7 +9,9 @@ import lombok.Data;
 @Data
 @TableName("user")
 public class User{
-    @TableId("pk_id")
+    @TableId(value = "pk_id",
+            type = IdType.AUTO
+    )
     private Integer id;
     @TableField("uk_username")
     private String username;

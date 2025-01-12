@@ -1,5 +1,6 @@
 package top.xianyume.iwe.backend.service.impl;
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.crypto.digest.DigestUtil;
@@ -39,21 +40,33 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void sign(UserLoginDTO user) {
+    public Integer sign(UserLoginDTO user) {
         String password = DigestUtil.md5Hex(user.getPassword());
-        String randomString = RandomUtil.randomString(10);
+        String randomString = RandomUtil.randomString(6);
 
         User userNew = new User();
         userNew.setUsername(user.getUsername());
         userNew.setPassword(password);
         userNew.setNickname("用户_" + randomString);
-
         userMapper.insert(userNew);
+
+        User userFromDb = userMapper.selectOne(new QueryWrapper<User>()
+                .eq("uk_username", user.getUsername())
+        );
+
+        return userFromDb.getId();
     }
 
     @Override
     public void update(UserUpdateDTO user) {
+        Integer loginId = Integer.valueOf((String) StpUtil.getLoginId());
 
+        User userNew = new User();
+        BeanUtil.copyProperties(user, userNew);
+
+        userNew.setId(loginId);
+
+        userMapper.updateById(userNew);
     }
 
     @Override

@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.xianyume.iwe.backend.model.dto.UserLoginDTO;
+import top.xianyume.iwe.backend.model.dto.UserUpdateDTO;
 import top.xianyume.iwe.backend.model.vo.UserInfoVO;
 import top.xianyume.iwe.backend.service.intf.UserService;
 
@@ -63,13 +64,27 @@ public class UserController {
     @RequestMapping(
             value = "/sign",
             method = RequestMethod.POST)
-    public SaResult sign(@RequestBody UserLoginDTO user) {
+    public SaResult sign(@RequestBody @Valid UserLoginDTO user) {
         UserInfoVO userFromDb = userService.infoByUsername(user.getUsername());
-        if (userFromDb != null) {
+        if (userFromDb.getId() != null) {
             return SaResult.error("注册失败，账号已经存在");
         }
-        userService.sign(user);
-        return SaResult.ok("成功注册");
+        Integer returnId = userService.sign(user);
+        StpUtil.login(returnId);
+        return SaResult.ok()
+                .setData(StpUtil.getTokenValue())
+                .setMsg("成功注册并登录");
     }
 
+    public SaResult updatePassword(@RequestBody UserLoginDTO user) {
+        return SaResult.ok();
+    }
+
+    @RequestMapping(
+            value = "/edit",
+            method = RequestMethod.POST)
+    public SaResult updateUserInfo(@RequestBody @Valid UserUpdateDTO user) {
+        userService.update(user);
+        return SaResult.ok("用户信息更新成功");
+    }
 }
