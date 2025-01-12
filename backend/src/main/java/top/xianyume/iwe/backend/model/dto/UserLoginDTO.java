@@ -14,6 +14,6 @@ public class UserLoginDTO implements Serializable {
     @Pattern(regexp = "^[a-zA-Z0-9_]+$", message = "账号格式不正确，仅允许字母、数字和下划线")
     private String username;
     @NotBlank(message = "密码不能为空")
-    @Size(min = 4, max = 32, message = "密码长度必须在 8 到 32 个字符之间")
+    @Size(min = 4, max = 32, message = "密码长度必须在 4 到 32 个字符之间")
     private String password;
 }

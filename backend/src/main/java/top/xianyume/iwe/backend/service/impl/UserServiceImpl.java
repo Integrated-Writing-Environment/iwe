@@ -24,6 +24,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Boolean checkOldPassword(String oldPassword) {
+        Integer loginId = Integer.valueOf((String) StpUtil.getLoginId());
+        User userFromDb = userMapper.selectOne(new QueryWrapper<User>()
+                .eq("pk_id", loginId)
+        );
+        oldPassword = DigestUtil.md5Hex(oldPassword);
+        return userFromDb.getPassword().equals(oldPassword);
+    }
+
+    @Override
     public Boolean login(UserLoginDTO user, String password) {
         User userFromDb = userMapper.selectOne(new QueryWrapper<User>()
                 .eq("uk_username", user.getUsername())
@@ -70,8 +80,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updatePassword(Integer id, String newPassword) {
+    public void updatePassword(String password) {
+        Integer loginId = Integer.valueOf((String) StpUtil.getLoginId());
+        password = DigestUtil.md5Hex(password);
 
+        User user = new User();
+        user.setId(loginId);
+        user.setPassword(password);
+
+        userMapper.updateById(user);
     }
 
     @Override

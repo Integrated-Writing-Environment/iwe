@@ -76,8 +76,26 @@ public class UserController {
                 .setMsg("成功注册并登录");
     }
 
-    public SaResult updatePassword(@RequestBody UserLoginDTO user) {
-        return SaResult.ok();
+    @RequestMapping(
+            value = "/update-password",
+            method = RequestMethod.POST)
+    public SaResult updatePassword(@RequestBody JsonNode jsonNode) {
+        String oldPassword = jsonNode.get("oldPassword").asText();
+        String newPassword = jsonNode.get("newPassword").asText();
+        if (oldPassword.isBlank() || newPassword.isBlank()) {
+            return SaResult.error("请输入旧密码和新密码");
+        }
+        if (newPassword.length() < 4 || newPassword.length() > 32) {
+            return SaResult.error("密码长度必须在 8 到 32 个字符之间");
+        }
+        if (newPassword.equals(oldPassword)) {
+            return SaResult.error("新密码和旧密码不能相同");
+        }
+        if (!userService.checkOldPassword(oldPassword)) {
+            return SaResult.error("更新密码失败，旧密码错误");
+        }
+        userService.updatePassword(newPassword);
+        return SaResult.ok("更新密码成功");
     }
 
     @RequestMapping(
