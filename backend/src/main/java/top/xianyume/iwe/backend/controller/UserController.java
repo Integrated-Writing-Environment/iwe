@@ -84,6 +84,10 @@ public class UserController {
             value = "/edit",
             method = RequestMethod.POST)
     public SaResult updateUserInfo(@RequestBody @Valid UserUpdateDTO user) {
+        UserInfoVO userFromDb = userService.infoByNickname(user.getNickname());
+        if (userFromDb.getId() != null) {
+            return SaResult.error("更新用户信息失败，相同的昵称已经被占用");
+        }
         userService.update(user);
         return SaResult.ok("用户信息更新成功");
     }

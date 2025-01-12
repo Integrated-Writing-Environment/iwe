@@ -15,5 +15,6 @@ public interface UserService {
     void updateAvatar(Integer id, String avatar);
     UserInfoVO infoById(Integer id);
     UserInfoVO infoByUsername(String username);
+    UserInfoVO infoByNickname(String nickname);
     List<UserInfoVO> page(UserInfoVO user, int offset, int size);
 }

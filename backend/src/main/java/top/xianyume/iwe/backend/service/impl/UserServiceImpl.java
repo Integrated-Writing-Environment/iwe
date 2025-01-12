@@ -100,6 +100,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserInfoVO infoByNickname(String nickname) {
+        User userFromDb = userMapper.selectOne(new QueryWrapper<User>()
+                .eq("uk_nickname", nickname)
+        );
+        UserInfoVO userInfo = new UserInfoVO();
+        BeanUtil.copyProperties(userFromDb, userInfo);
+        return userInfo;
+    }
+
+    @Override
     public List<UserInfoVO> page(UserInfoVO user, int offset, int size) {
         return List.of();
     }
