@@ -95,6 +95,7 @@ public class UserController {
             return SaResult.error("更新密码失败，旧密码错误");
         }
         userService.updatePassword(newPassword);
+        StpUtil.logout();
         return SaResult.ok("更新密码成功");
     }
 
