@@ -41,6 +41,7 @@ public class UserServiceImpl implements UserService {
         if (userFromDb == null) {
             return false;
         }
+        password = DigestUtil.md5Hex(user.getPassword());
         return userFromDb.getPassword().equals(password);
     }
 
