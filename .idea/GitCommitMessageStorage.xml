@@ -2,19 +2,7 @@
 <project version="4">
   <component name="GitCommitMessageStorage">
     <option name="messageStorage">
-      <MessageStorage>
-        <option name="commitTemplate">
-          <CommitTemplate>
-            <option name="body" value="" />
-            <option name="changes" value="" />
-            <option name="closes" value="" />
-            <option name="scope" value="后端模块" />
-            <option name="skipCi" value="" />
-            <option name="subject" value="增加" />
-            <option name="type" value="refactor" />
-          </CommitTemplate>
-        </option>
-      </MessageStorage>
+      <MessageStorage />
     </option>
   </component>
 </project>
