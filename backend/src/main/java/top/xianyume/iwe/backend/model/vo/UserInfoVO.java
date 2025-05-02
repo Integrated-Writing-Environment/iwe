@@ -1,12 +1,15 @@
 package top.xianyume.iwe.backend.model.vo;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Builder
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserInfoVO {
     private Integer id;
+    private String username;
     private String nickname;
     private String avatar;
     private String description;
