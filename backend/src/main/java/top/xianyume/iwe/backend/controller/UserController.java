@@ -12,6 +12,10 @@ import top.xianyume.iwe.backend.model.vo.UserInfoVO;
 import top.xianyume.iwe.backend.service.intf.UserService;
 
 
+/**
+ *
+ * @author xianyume
+ */
 @RestController
 @RequestMapping("/user/")
 @Validated

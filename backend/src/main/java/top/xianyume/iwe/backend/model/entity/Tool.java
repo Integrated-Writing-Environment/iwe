@@ -5,21 +5,19 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * @author Xianyume
+ * @date 2025/05/01 23:42
+ **/
 @Data
-@TableName("user")
-public class User{
+@TableName("tool")
+public class Tool {
     @TableId(type = IdType.AUTO)
     private Integer id;
-    private String username;
     private String nickname;
-    @TableField("pwd")
-    private String password;
-    // 可为空
     private String description;
     // 可为空
-    private String phone;
-    // 可为空
-    private String email;
+    private String fc;
     @TableLogic
     @TableField("is_deleted")
     private Integer deleted;
@@ -27,5 +25,5 @@ public class User{
     private LocalDateTime createTime;
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
-
 }
+
