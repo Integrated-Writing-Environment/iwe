@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.5</version>
+        <version>3.4.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>top.xianyume.iwe</groupId>
@@ -32,11 +32,8 @@
             1.39.0
         </cn.dev33.sa-token-spring-boot3-starter.version>
         <com.baomidou.mybatis-plus-spring-boot3-starter.version>
-            3.5.11
+            3.5.9
         </com.baomidou.mybatis-plus-spring-boot3-starter.version>
-        <com.github.yulichang.mybatis-plus-jsqlparser.version>
-            3.5.11
-        </com.github.yulichang.mybatis-plus-jsqlparser.version>
         <com.mysql.mysql-connector-j.version>
             8.2.0
         </com.mysql.mysql-connector-j.version>
@@ -45,16 +42,12 @@
         </com.alibaba.druid.version>
 
         <org.projectlombok.lombok.version>
-            1.18.38
+            1.18.36
         </org.projectlombok.lombok.version>
 
         <cn.hutool.hutool-all.version>
             5.8.26
         </cn.hutool.hutool-all.version>
-
-        <com.github.yulichang.mybatis-plus-join-boot-starter.version>
-            1.5.3
-        </com.github.yulichang.mybatis-plus-join-boot-starter.version>
     </properties>
     <dependencies>
         <dependency>
@@ -66,6 +59,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${org.projectlombok.lombok.version}</version>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -90,12 +84,6 @@
             <version>${com.baomidou.mybatis-plus-spring-boot3-starter.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-jsqlparser</artifactId>
-            <version>${com.github.yulichang.mybatis-plus-jsqlparser.version}</version>
-        </dependency>
-
         <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
         <dependency>
             <groupId>com.mysql</groupId>
@@ -116,11 +104,6 @@
             <version>${cn.hutool.hutool-all.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.github.yulichang</groupId>
-            <artifactId>mybatis-plus-join-boot-starter</artifactId>
-            <version>${com.github.yulichang.mybatis-plus-join-boot-starter.version}</version>
-        </dependency>
 
     </dependencies>
 
@@ -148,21 +131,6 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.5.3</version>
-                <configuration>
-                    <argLine>
-                        -Xshare:off
-                        -XX:+EnableDynamicAgentLoading
-                        --add-opens=java.base/java.lang=ALL-UNNAMED
-                        --add-opens=java.base/java.util=ALL-UNNAMED
-                        -javaagent:"${settings.localRepository}/org/mockito/mockito-core/5.14.2/mockito-core-5.14.2.jar"
-                    </argLine>
                 </configuration>
             </plugin>
 
