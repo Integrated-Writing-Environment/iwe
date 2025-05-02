@@ -8,7 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.xianyume.iwe.backend.model.dto.UserLoginDTO;
 import top.xianyume.iwe.backend.model.dto.UserUpdateDTO;
-import top.xianyume.iwe.backend.model.vo.UserInfoVO;
+import top.xianyume.iwe.backend.model.vo.UserProfileVO;
 import top.xianyume.iwe.backend.service.intf.UserService;
 
 
@@ -31,7 +31,7 @@ public class UserController {
             method = RequestMethod.POST
     )
     public SaResult login(@RequestBody @Valid UserLoginDTO user) {
-        UserInfoVO userFromDb = userService.infoByUsername(user.getUsername());
+        UserProfileVO userFromDb = userService.infoByUsername(user.getUsername());
         if (!userService.login(user, user.getPassword())) {
             return SaResult.error("请检查您的账号或密码");
         }
@@ -47,7 +47,7 @@ public class UserController {
     )
     public SaResult info(@RequestBody JsonNode jsonNode) {
         String username = jsonNode.get("username").asText();
-        UserInfoVO userInfo = userService.infoByUsername(username);
+        UserProfileVO userInfo = userService.infoByUsername(username);
         if (userInfo.getId() == null) {
             return SaResult.error("用户不存在");
         }
@@ -69,7 +69,7 @@ public class UserController {
             value = "/sign",
             method = RequestMethod.POST)
     public SaResult sign(@RequestBody @Valid UserLoginDTO user) {
-        UserInfoVO userFromDb = userService.infoByUsername(user.getUsername());
+        UserProfileVO userFromDb = userService.infoByUsername(user.getUsername());
         if (userFromDb.getId() != null) {
             return SaResult.error("注册失败，账号已经存在");
         }
@@ -107,7 +107,7 @@ public class UserController {
             value = "/edit",
             method = RequestMethod.POST)
     public SaResult updateUserInfo(@RequestBody @Valid UserUpdateDTO user) {
-        UserInfoVO userFromDb = userService.infoByNickname(user.getNickname());
+        UserProfileVO userFromDb = userService.infoByNickname(user.getNickname());
         if (userFromDb.getId() != null) {
             return SaResult.error("更新用户信息失败，相同的昵称已经被占用");
         }

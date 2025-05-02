@@ -10,7 +10,7 @@ import top.xianyume.iwe.backend.mapper.UserMapper;
 import top.xianyume.iwe.backend.model.dto.UserLoginDTO;
 import top.xianyume.iwe.backend.model.dto.UserUpdateDTO;
 import top.xianyume.iwe.backend.model.entity.User;
-import top.xianyume.iwe.backend.model.vo.UserInfoVO;
+import top.xianyume.iwe.backend.model.vo.UserProfileVO;
 import top.xianyume.iwe.backend.service.intf.UserService;
 
 import java.util.List;
@@ -98,37 +98,37 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserInfoVO infoById(Integer id) {
+    public UserProfileVO infoById(Integer id) {
         User userFromDb = userMapper.selectOne(new QueryWrapper<User>()
                 .eq("pk_id", id)
         );
-        UserInfoVO userInfo = new UserInfoVO();
+        UserProfileVO userInfo = new UserProfileVO();
         BeanUtil.copyProperties(userFromDb, userInfo);
         return userInfo;
     }
 
     @Override
-    public UserInfoVO infoByUsername(String username) {
+    public UserProfileVO infoByUsername(String username) {
         User userFromDb = userMapper.selectOne(new QueryWrapper<User>()
                 .eq("uk_username", username)
         );
-        UserInfoVO userInfo = new UserInfoVO();
+        UserProfileVO userInfo = new UserProfileVO();
         BeanUtil.copyProperties(userFromDb, userInfo);
         return userInfo;
     }
 
     @Override
-    public UserInfoVO infoByNickname(String nickname) {
+    public UserProfileVO infoByNickname(String nickname) {
         User userFromDb = userMapper.selectOne(new QueryWrapper<User>()
                 .eq("uk_nickname", nickname)
         );
-        UserInfoVO userInfo = new UserInfoVO();
+        UserProfileVO userInfo = new UserProfileVO();
         BeanUtil.copyProperties(userFromDb, userInfo);
         return userInfo;
     }
 
     @Override
-    public List<UserInfoVO> page(UserInfoVO user, int offset, int size) {
+    public List<UserProfileVO> page(UserProfileVO user, int offset, int size) {
         return List.of();
     }
 }
