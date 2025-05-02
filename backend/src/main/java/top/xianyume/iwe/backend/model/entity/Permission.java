@@ -1,25 +1,22 @@
 package top.xianyume.iwe.backend.model.entity;
 
+import cn.hutool.json.JSON;
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * @author Xianyume
+ * @date 2025/05/01 23:44
+ **/
 @Data
-@TableName("user")
-public class User{
+@TableName("permission")
+public class Permission {
     @TableId(type = IdType.AUTO)
     private Integer id;
-    private String username;
-    private String nickname;
-    @TableField("pwd")
-    private String password;
     // 可为空
-    private String description;
-    // 可为空
-    private String phone;
-    // 可为空
-    private String email;
+    private JSON permission;
     @TableLogic
     @TableField("is_deleted")
     private Integer deleted;
@@ -27,5 +24,5 @@ public class User{
     private LocalDateTime createTime;
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
-
 }
+

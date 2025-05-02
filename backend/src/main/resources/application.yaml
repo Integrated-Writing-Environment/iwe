@@ -1,3 +1,5 @@
+server:
+  port: 8080
 spring:
   application:
     name: "backend"
@@ -15,8 +17,13 @@ spring:
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     banner: false
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
 sa-token:
   # token 名称（同时也是 cookie 名称）
   token-name: satoken
@@ -31,4 +38,9 @@ sa-token:
   # token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
   token-style: uuid
   # 是否输出操作日志
-  is-log: true
+  is-log: false
+  # 是否打印 Sa-Token 的字符画
+  is-print: false
+mybatis-plus-join:
+  # 是否打印 mybatis-plus-join 的字符画
+  banner: false

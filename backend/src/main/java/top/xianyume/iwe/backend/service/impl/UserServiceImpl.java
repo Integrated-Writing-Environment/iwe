@@ -1,7 +1,14 @@
 package top.xianyume.iwe.backend.service.impl;
 
+import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.RandomUtil;
+import cn.hutool.crypto.digest.DigestUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.stereotype.Service;
 import top.xianyume.iwe.backend.mapper.UserMapper;
+import top.xianyume.iwe.backend.model.dto.UserLoginDTO;
+import top.xianyume.iwe.backend.model.dto.UserUpdateDTO;
 import top.xianyume.iwe.backend.model.entity.User;
 import top.xianyume.iwe.backend.model.vo.UserInfoVO;
 import top.xianyume.iwe.backend.service.intf.UserService;
@@ -17,8 +24,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean login(User user, String password) {
-        return null;
+    public Boolean checkOldPassword(String oldPassword) {
+        Integer loginId = Integer.valueOf((String) StpUtil.getLoginId());
+        User userFromDb = userMapper.selectOne(new QueryWrapper<User>()
+                .eq("pk_id", loginId)
+        );
+        oldPassword = DigestUtil.md5Hex(oldPassword);
+        return userFromDb.getPassword().equals(oldPassword);
+    }
+
+    @Override
+    public Boolean login(UserLoginDTO user, String password) {
+        User userFromDb = userMapper.selectOne(new QueryWrapper<User>()
+                .eq("uk_username", user.getUsername())
+        );
+        if (userFromDb == null) {
+            return false;
+        }
+        password = DigestUtil.md5Hex(user.getPassword());
+        return userFromDb.getPassword().equals(password);
     }
 
     @Override
@@ -27,23 +51,80 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void signUp(User user) {
+    public Integer sign(UserLoginDTO user) {
+        String password = DigestUtil.md5Hex(user.getPassword());
+        String randomString = RandomUtil.randomString(6);
+
+        User userNew = new User();
+        userNew.setUsername(user.getUsername());
+        userNew.setPassword(password);
+        userNew.setNickname("用户_" + randomString);
+        userMapper.insert(userNew);
+
+        User userFromDb = userMapper.selectOne(new QueryWrapper<User>()
+                .eq("uk_username", user.getUsername())
+        );
+
+        return userFromDb.getId();
+    }
+
+    @Override
+    public void update(UserUpdateDTO user) {
+        Integer loginId = Integer.valueOf((String) StpUtil.getLoginId());
+
+        User userNew = new User();
+        BeanUtil.copyProperties(user, userNew);
+
+        userNew.setId(loginId);
+
+        userMapper.updateById(userNew);
+    }
+
+    @Override
+    public void updatePassword(String password) {
+        Integer loginId = Integer.valueOf((String) StpUtil.getLoginId());
+        password = DigestUtil.md5Hex(password);
+
+        User user = new User();
+        user.setId(loginId);
+        user.setPassword(password);
+
+        userMapper.updateById(user);
+    }
+
+    @Override
+    public void updateAvatar(Integer id, String avatar) {
 
     }
 
     @Override
-    public void update(User user) {
-
+    public UserInfoVO infoById(Integer id) {
+        User userFromDb = userMapper.selectOne(new QueryWrapper<User>()
+                .eq("pk_id", id)
+        );
+        UserInfoVO userInfo = new UserInfoVO();
+        BeanUtil.copyProperties(userFromDb, userInfo);
+        return userInfo;
     }
 
     @Override
-    public void updatePassword(User user, String newPassword) {
-
+    public UserInfoVO infoByUsername(String username) {
+        User userFromDb = userMapper.selectOne(new QueryWrapper<User>()
+                .eq("uk_username", username)
+        );
+        UserInfoVO userInfo = new UserInfoVO();
+        BeanUtil.copyProperties(userFromDb, userInfo);
+        return userInfo;
     }
 
     @Override
-    public UserInfoVO info(User user) {
-        return null;
+    public UserInfoVO infoByNickname(String nickname) {
+        User userFromDb = userMapper.selectOne(new QueryWrapper<User>()
+                .eq("uk_nickname", nickname)
+        );
+        UserInfoVO userInfo = new UserInfoVO();
+        BeanUtil.copyProperties(userFromDb, userInfo);
+        return userInfo;
     }
 
     @Override
