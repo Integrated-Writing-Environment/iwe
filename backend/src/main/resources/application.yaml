@@ -39,3 +39,8 @@ sa-token:
   token-style: uuid
   # 是否输出操作日志
   is-log: false
+  # 是否打印 Sa-Token 的字符画
+  is-print: false
+mybatis-plus-join:
+  # 是否打印 mybatis-plus-join 的字符画
+  banner: false
