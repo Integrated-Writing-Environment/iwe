@@ -1,12 +1,12 @@
 package top.xianyume.iwe.backend.controller;
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import top.xianyume.iwe.backend.context.UserContext;
-import top.xianyume.iwe.backend.model.entity.User;
+import org.springframework.web.bind.annotation.*;
+import top.xianyume.iwe.backend.model.dto.UserSignupDTO;
+import top.xianyume.iwe.backend.model.vo.UserPublicVO;
 import top.xianyume.iwe.backend.service.intf.UserService;
 
 
@@ -15,21 +15,73 @@ import top.xianyume.iwe.backend.service.intf.UserService;
  * @author xianyume
  */
 @RestController
-@RequestMapping("/users/")
+@RequestMapping("/users")
 @Validated
 public class UserController {
+
     private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping("/test1")
-    public SaResult test1() {
-        User user = new User();
-        user.setUsername("aaddcc");
-        UserContext.setCurrentUser(user);
-        userService.say("a");
-        return SaResult.ok("test1");
+    /**
+     * 获取目标单个用户信息
+     */
+    @GetMapping("/{id}")
+    public SaResult getUserPublicInfo(@PathVariable Integer id) {
+        UserPublicVO user = userService.getUserPublicInfo(id);
+        return SaResult.ok("获取单个用户成功")
+                .setData(user);
+    }
+
+    /**
+     * 获取目标多个用户信息
+     */
+    @GetMapping
+    public SaResult getUserPublicInfoList(@RequestParam(required = false) String nickname,
+                                          @RequestParam Integer pageNum,
+                                          @RequestParam Integer pageSize) {
+        IPage<UserPublicVO> userList = userService.getUserPublicInfoList(nickname, pageNum, pageSize);
+        return SaResult.ok("获取多个用户成功")
+                .setData(userList);
+    }
+
+    /**
+     * 登录
+     */
+    @PostMapping("/login")
+    public SaResult login(String username, String password, String verifyCode) {
+        userService.login(username, password, verifyCode);
+        String token = StpUtil.getTokenValue();
+        return SaResult.ok("登录成功")
+                .setData(token);
+    }
+
+    /**
+     * 登出
+     */
+    @PostMapping("/logout")
+    public SaResult logout() {
+        userService.logout();
+        return SaResult.ok("登出成功");
+    }
+
+    /**
+     * 注册
+     */
+    @PostMapping
+    public SaResult signUp(@Validated UserSignupDTO user) {
+        userService.signUp(user.getUsername(), user.getPassword(), user.getVerifyCode());
+        return SaResult.ok("注册成功，请继续登录！");
+    }
+
+    /**
+     * 修改用户信息
+     */
+    @PutMapping
+    public SaResult updateUserInfo(String description, String phone, String email) {
+        userService.updateUserInfo(description, phone, email);
+        return SaResult.ok("修改用户信息成功");
     }
 }
