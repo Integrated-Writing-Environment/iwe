@@ -181,19 +181,6 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-
-        <repository>
-            <id>nexus-163</id>
-            <name>Nexus 163</name>
-            <url>http://mirrors.163.com/maven/repository/maven-public/</url>
-            <layout>default</layout>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -208,19 +195,6 @@
                 <enabled>false</enabled>
             </snapshots>
         </pluginRepository>
-
-        <pluginRepository>
-            <id>nexus-163</id>
-            <name>Nexus 163</name>
-            <url>http://mirrors.163.com/maven/repository/maven-public/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </pluginRepository>
-
 
     </pluginRepositories>
 </project>
