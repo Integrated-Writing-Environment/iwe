@@ -8,18 +8,17 @@ import java.time.LocalDateTime;
 @Data
 @TableName("user")
 public class User{
+
     @TableId(type = IdType.AUTO)
     private Integer id;
     private String username;
     private String nickname;
     @TableField("pwd")
     private String password;
-    // 可为空
     private String description;
-    // 可为空
     private String phone;
-    // 可为空
     private String email;
+
     @TableLogic
     @TableField("is_deleted")
     private Integer deleted;

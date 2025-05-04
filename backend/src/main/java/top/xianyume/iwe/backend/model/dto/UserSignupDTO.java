@@ -7,8 +7,12 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * @author Xianyume
+ * @date 2025/05/03 02:58
+ **/
 @Data
-public class UserLoginDTO implements Serializable {
+public class UserSignupDTO implements Serializable {
 
     @NotBlank(message = "用户名不能为空")
     @Size(min = 4, max = 32, message = "用户名长度必须在 4 到 32 之间")
@@ -19,4 +23,7 @@ public class UserLoginDTO implements Serializable {
     @Size(min = 4, max = 32, message = "密码长度必须在 4 到 32 个字符之间")
     private String password;
 
+    @NotBlank(message = "验证码不能为空")
+    private String verifyCode;
 }
+
