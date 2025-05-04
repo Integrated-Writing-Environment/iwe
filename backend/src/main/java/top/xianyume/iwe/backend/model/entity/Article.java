@@ -2,6 +2,8 @@ package top.xianyume.iwe.backend.model.entity;
 
 import cn.hutool.json.JSON;
 import com.baomidou.mybatisplus.annotation.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -15,8 +17,11 @@ import java.time.LocalDateTime;
 public class Article {
     @TableId(type = IdType.AUTO)
     private Integer id;
+    @NotBlank(message = "文章标题不能为空")
+    @Size(max = 128, message = "文章标题长度必须小于等于于 128 个字符")
     private String title;
     // 可为空
+    @Size(max = 65535, message = "文章内容长度必须少于 65535 个字符")
     private String content;
     // 可为空
     private JSON tools;
