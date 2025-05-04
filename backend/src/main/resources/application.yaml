@@ -1,17 +1,16 @@
 server:
   port: 8080
+  servlet:
+    context-path: /api
 spring:
   application:
     name: "backend"
+  config:
+    import: "settings.yaml"
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: admin
+    # 默认数据源
     url: jdbc:mysql://localhost:3306/iwe?serverTimezone=UTC
-#  sql:
-#    init:
-#      schema-locations: classpath:db/schema-h2.sql
-#      data-locations: classpath:db/data-h2.sql
+    driver-class-name: com.mysql.cj.jdbc.Driver
   main:
     banner-mode: off
 mybatis-plus:
@@ -21,7 +20,7 @@ mybatis-plus:
   global-config:
     banner: false
     db-config:
-      logic-delete-field: deleted
+      logic-delete-field: is_deleted
       logic-delete-value: 1
       logic-not-delete-value: 0
 sa-token:
