@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional // 启用事务，测试完成后自动回滚
-public class UserServiceTest {
+public class UserTest {
 
     @Autowired
     private UserMapper userMapper;

@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @SpringBootTest
 @Transactional
-public class ArticleServiceTest {
+public class ArticleTest {
 
     @Autowired
     private ArticleMapper articleMapper;

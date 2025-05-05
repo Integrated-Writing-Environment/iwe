@@ -7,7 +7,6 @@ import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.xianyume.iwe.backend.model.dto.UserLoginDTO;
-import top.xianyume.iwe.backend.model.dto.UserQueryDTO;
 import top.xianyume.iwe.backend.model.dto.UserSignupDTO;
 import top.xianyume.iwe.backend.model.dto.UserUpdateDTO;
 import top.xianyume.iwe.backend.model.vo.UserPublicVO;
@@ -43,9 +42,13 @@ public class UserController {
      * 获取目标多个用户信息
      */
     @GetMapping
-    public SaResult getUserPublicInfoList(@ModelAttribute @Valid UserQueryDTO user) {
+    public SaResult getUserPublicInfoList(
+            @RequestParam(required = false) String nickname,
+            @RequestParam(defaultValue = "1") Integer pageNum,
+            @RequestParam(defaultValue = "20") Integer pageSize
+    ) {
         IPage<UserPublicVO> userList = userService.getUserPublicInfoList(
-                user.getNickname(), user.getPageNum(), user.getPageSize());
+                nickname, pageNum, pageSize);
         return SaResult.ok("获取多个用户成功")
                 .setData(userList);
     }

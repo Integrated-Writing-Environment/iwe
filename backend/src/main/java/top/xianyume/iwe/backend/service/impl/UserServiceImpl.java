@@ -49,18 +49,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public IPage<UserPublicVO> getUserPublicInfoList(String nickname, Integer pageNum, Integer pageSize) {
-        if (pageNum == null || pageSize == null) {
-            pageNum = 1;
-            pageSize = 20;
-        }
 
         Page<User> page = new Page<>(pageNum, pageSize);
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("id", "nickname", "description", "create_time");
-        if (nickname != null) {
-            queryWrapper.like("nickname", nickname);
-        }
-        queryWrapper.orderByDesc("create_time");
+        queryWrapper.select("id", "nickname", "description", "create_time")
+                .like("nickname", nickname)
+                .orderByDesc("create_time");
 
         IPage<User> userPage = userMapper.selectPage(page, queryWrapper);
         return userPage.convert(user -> {
