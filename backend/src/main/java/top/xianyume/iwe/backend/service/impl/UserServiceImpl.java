@@ -7,8 +7,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.stereotype.Service;
 import top.xianyume.iwe.backend.context.UserContext;
+import top.xianyume.iwe.backend.mapper.PermissionMapper;
 import top.xianyume.iwe.backend.mapper.UserMapper;
+import top.xianyume.iwe.backend.mapper.UserPermissionLinkMapper;
+import top.xianyume.iwe.backend.model.entity.Permission;
 import top.xianyume.iwe.backend.model.entity.User;
+import top.xianyume.iwe.backend.model.entity.UserPermissionLink;
 import top.xianyume.iwe.backend.model.vo.UserPublicVO;
 import top.xianyume.iwe.backend.service.intf.UserService;
 
@@ -18,9 +22,13 @@ import static cn.hutool.crypto.SecureUtil.md5;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
+    private final UserPermissionLinkMapper userPermissionLinkMapper;
+    private final PermissionMapper permissionMapper;
 
-    public UserServiceImpl(UserMapper userMapper) {
+    public UserServiceImpl(UserMapper userMapper, UserPermissionLinkMapper userPermissionLinkMapper, PermissionMapper permissionMapper) {
         this.userMapper = userMapper;
+        this.userPermissionLinkMapper = userPermissionLinkMapper;
+        this.permissionMapper = permissionMapper;
     }
 
 
@@ -130,6 +138,16 @@ public class UserServiceImpl implements UserService {
         user.setNickname(RandomUtil.randomString(10));
 
         userMapper.insert(user);
+
+
+        Permission permission = new Permission();
+        permissionMapper.insert(permission);
+
+        UserPermissionLink userPermissionLink = new UserPermissionLink();
+        userPermissionLink.setUserId(user.getId());
+        userPermissionLink.setPermissionId(permission.getId());
+
+        userPermissionLinkMapper.insert(userPermissionLink);
     }
 
     @Override

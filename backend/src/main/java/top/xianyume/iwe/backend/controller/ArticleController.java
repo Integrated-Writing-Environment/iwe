@@ -1,5 +1,8 @@
 package top.xianyume.iwe.backend.controller;
 
+import cn.dev33.satoken.annotation.SaCheckOr;
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.util.SaResult;
 import cn.hutool.json.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -38,6 +41,10 @@ public class ArticleController {
     }
 
     @GetMapping("/{id}")
+    @SaCheckOr(
+            role = @SaCheckRole("user"),
+            permission = @SaCheckPermission("article.get")
+    )
     public SaResult getArticleInfo(@PathVariable Integer id) {
         ArticleDTO article = articleService.getArticleInfo(id);
         return SaResult.ok("获取文章成功")
@@ -45,6 +52,10 @@ public class ArticleController {
     }
 
     @GetMapping
+    @SaCheckOr(
+            role = @SaCheckRole("user"),
+            permission = @SaCheckPermission("article.get_list")
+    )
     public SaResult getArticleInfoList(
             @RequestParam(required = false) String title,
             @RequestParam(defaultValue = "1") Integer pageNum,
@@ -56,30 +67,50 @@ public class ArticleController {
     }
 
     @PostMapping
+    @SaCheckOr(
+            role = @SaCheckRole("user"),
+            permission = @SaCheckPermission("article.create")
+    )
     public SaResult createArticle(@ModelAttribute @Valid ArticleDTO article) {
         articleService.createArticle(article.getTitle());
         return SaResult.ok("创建文章成功");
     }
 
     @PutMapping("/title")
+    @SaCheckOr(
+            role = @SaCheckRole("user"),
+            permission = @SaCheckPermission("article.update_title")
+    )
     public SaResult updateArticleTitle(@ModelAttribute @Valid ArticleDTO article) {
         articleService.updateTitle(article.getId(), article.getTitle());
         return SaResult.ok("更新文章成功");
     }
 
     @PutMapping("/content")
+    @SaCheckOr(
+            role = @SaCheckRole("user"),
+            permission = @SaCheckPermission("article.update_content")
+    )
     public SaResult updateArticleContent(@ModelAttribute @Valid ArticleContentDTO article) {
         articleService.updateContent(article.getId(), article.getContent());
         return SaResult.ok("更新文章成功");
     }
 
     @DeleteMapping("/{id}")
+    @SaCheckOr(
+            role = @SaCheckRole("user"),
+            permission = @SaCheckPermission("article.delete")
+    )
     public SaResult deleteArticle(@PathVariable Integer id) {
         articleService.deleteArticle(id);
         return SaResult.ok("删除文章成功");
     }
 
     @GetMapping("/tools")
+    @SaCheckOr(
+            role = @SaCheckRole("user"),
+            permission = @SaCheckPermission("article.get_tools")
+    )
     public SaResult getArticleTools(@RequestParam Integer id) {
         JSON toolList = articleService.getToolList(id);
         return SaResult.ok("获取文章工具成功")
@@ -87,12 +118,20 @@ public class ArticleController {
     }
 
     @PutMapping("/tools")
+    @SaCheckOr(
+            role = @SaCheckRole("user"),
+            permission = @SaCheckPermission("article.update_tools")
+    )
     public SaResult updateArticleTools(@ModelAttribute @Valid ArticleDTO article) {
         articleService.updateTool(article.getId(), article.getTools());
         return SaResult.ok();
     }
 
     @PostMapping("/call")
+    @SaCheckOr(
+            role = @SaCheckRole("user"),
+            permission = @SaCheckPermission("article.call")
+    )
     public SaResult getToolCall(@ModelAttribute @Valid ToolCallDTO call) {
         List<Message> messages = List.of(
                 new SystemMessage(call.getFc()),

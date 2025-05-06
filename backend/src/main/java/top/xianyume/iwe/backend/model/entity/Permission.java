@@ -1,6 +1,5 @@
 package top.xianyume.iwe.backend.model.entity;
 
-import cn.hutool.json.JSON;
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
@@ -16,7 +15,7 @@ public class Permission {
     @TableId(type = IdType.AUTO)
     private Integer id;
     // 可为空
-    private JSON permission;
+    private String permission;
     @TableLogic
     @TableField("is_deleted")
     private Integer deleted;

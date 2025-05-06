@@ -1,5 +1,6 @@
 package top.xianyume.iwe.backend.controller;
 
+import cn.dev33.satoken.annotation.*;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -65,6 +66,10 @@ public class UserController {
      * 登出
      */
     @PostMapping("/logout")
+    @SaCheckOr(
+            role = @SaCheckRole("user"),
+            permission = @SaCheckPermission("user.logout")
+    )
     public SaResult logout() {
         userService.logout();
         return SaResult.ok("登出成功");
@@ -83,8 +88,13 @@ public class UserController {
      * 修改用户信息
      */
     @PutMapping
+    @SaCheckOr(
+            role = @SaCheckRole("user"),
+            permission = @SaCheckPermission("user.update")
+    )
     public SaResult updateUserInfo(@ModelAttribute UserUpdateDTO user) {
         userService.updateUserInfo(user.getNickname(), user.getDescription(), user.getEmail());
         return SaResult.ok("修改用户信息成功");
     }
+
 }
