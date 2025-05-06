@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @SpringBootTest
 @Transactional
-public class ToolTest {
+public class ToolServiceTest {
 
     @Autowired
     private ToolMapper toolMapper;

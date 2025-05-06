@@ -21,5 +21,6 @@ public class UserContext {
     public static void clear() {
         CURRENT_USER.remove();
     }
+
 }
 

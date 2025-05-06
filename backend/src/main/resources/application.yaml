@@ -9,10 +9,21 @@ spring:
     import: "settings.yaml"
   datasource:
     # 默认数据源
-    url: jdbc:mysql://localhost:3306/iwe?serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/iwe?serverTimezone=UTC&createDatabaseIfNotExist=true
     driver-class-name: com.mysql.cj.jdbc.Driver
+  sql:
+    init:
+      schema-locations: classpath:db/schema-mysql.sql
   main:
     banner-mode: off
+  ai:
+    openai:
+      base-url: https://api.deepseek.com/
+      chat:
+        options:
+          model: deepseek-chat
+          temperature: 0.7
+          max-tokens: 1000
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true

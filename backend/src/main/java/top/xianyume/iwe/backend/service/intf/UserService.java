@@ -6,7 +6,7 @@ import top.xianyume.iwe.backend.model.vo.UserPublicVO;
 public interface UserService {
 
     UserPublicVO getUserPublicInfo(Integer userId);
-    IPage<UserPublicVO> getUserPublicInfoList(String nickname, Integer pageNum, Integer pageSize);
+    IPage<UserPublicVO> getUserPublicInfoList(String username, Integer pageNum, Integer pageSize);
     void login(String username, String password, String verifyCode);
     void logout();
     void signUp(String username, String password, String verifyCode);

@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @SpringBootTest
 @Transactional // 启用事务，测试完成后自动回滚
-public class PermissionTest {
+public class PermissionServiceTest {
 
     @Autowired
     private PermissionMapper permissionMapper;

@@ -11,3 +11,6 @@ spring:
       # never 从不（生产环境使用）
       # embedded 嵌入式
       mode: always
+  ai:
+    openai:
+      api-key: sk-f5d17c9584e94b1c992cd566f2e5b136
