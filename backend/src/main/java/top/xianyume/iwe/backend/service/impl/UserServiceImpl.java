@@ -10,6 +10,7 @@ import top.xianyume.iwe.backend.context.UserContext;
 import top.xianyume.iwe.backend.mapper.PermissionMapper;
 import top.xianyume.iwe.backend.mapper.UserMapper;
 import top.xianyume.iwe.backend.mapper.UserPermissionLinkMapper;
+import top.xianyume.iwe.backend.model.dto.PermissionDTO;
 import top.xianyume.iwe.backend.model.entity.Permission;
 import top.xianyume.iwe.backend.model.entity.User;
 import top.xianyume.iwe.backend.model.entity.UserPermissionLink;
@@ -141,6 +142,7 @@ public class UserServiceImpl implements UserService {
 
 
         Permission permission = new Permission();
+        permission.setPermission(PermissionDTO.getUserPermissionDefault().toJson());
         permissionMapper.insert(permission);
 
         UserPermissionLink userPermissionLink = new UserPermissionLink();
