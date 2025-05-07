@@ -1,6 +1,9 @@
 package top.xianyume.iwe.backend.controller;
 
-import cn.dev33.satoken.annotation.*;
+import cn.dev33.satoken.annotation.SaCheckOr;
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaCheckRole;
+import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -55,11 +58,21 @@ public class UserController {
      * 登录
      */
     @PostMapping("/login")
+    @SaIgnore
     public SaResult login(@ModelAttribute @Valid UserLoginDTO user) {
         userService.login(user.getUsername(), user.getPassword(), user.getVerifyCode());
         String token = StpUtil.getTokenValue();
         return SaResult.ok("登录成功")
                 .setData(token);
+    }
+    /**
+     * 注册
+     */
+    @PostMapping
+    @SaIgnore
+    public SaResult signUp(@ModelAttribute @Valid UserSignupDTO user) {
+        userService.signUp(user.getUsername(), user.getPassword(), user.getVerifyCode());
+        return SaResult.ok("注册成功，请继续登录！");
     }
 
     /**
@@ -75,14 +88,6 @@ public class UserController {
         return SaResult.ok("登出成功");
     }
 
-    /**
-     * 注册
-     */
-    @PostMapping
-    public SaResult signUp(@ModelAttribute @Valid UserSignupDTO user) {
-        userService.signUp(user.getUsername(), user.getPassword(), user.getVerifyCode());
-        return SaResult.ok("注册成功，请继续登录！");
-    }
 
     /**
      * 修改用户信息
@@ -97,4 +102,16 @@ public class UserController {
         return SaResult.ok("修改用户信息成功");
     }
 
+    @GetMapping("/me")
+    @SaIgnore
+    public SaResult me() {
+        if (StpUtil.isLogin()) {
+            UserPublicVO user = userService.getUserPublicInfo(StpUtil.getLoginIdAsInt());
+            return SaResult.ok("获取用户成功")
+                    .setData(user);
+        }
+        else {
+            return SaResult.error("未登录");
+        }
+    }
 }

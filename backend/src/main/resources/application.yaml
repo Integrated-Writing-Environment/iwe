@@ -54,3 +54,4 @@ sa-token:
 mybatis-plus-join:
   # 是否打印 mybatis-plus-join 的字符画
   banner: false
+debug: true

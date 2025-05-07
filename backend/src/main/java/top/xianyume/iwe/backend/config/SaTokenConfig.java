@@ -1,6 +1,7 @@
 package top.xianyume.iwe.backend.config;
 
 import cn.dev33.satoken.interceptor.SaInterceptor;
+import cn.dev33.satoken.router.SaHttpMethod;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpUtil;
 import org.springframework.context.annotation.Configuration;
@@ -14,9 +15,7 @@ public class SaTokenConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new SaInterceptor(handle -> SaRouter
                 .match("/**")
-                .notMatch("/users/login")
-                .notMatch("/users")
-                .notMatch("GET")
+                .notMatch(SaHttpMethod.OPTIONS)
                 .check(r -> StpUtil.checkLogin())));
     }
 }
