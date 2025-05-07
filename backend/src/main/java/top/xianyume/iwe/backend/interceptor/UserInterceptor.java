@@ -43,11 +43,10 @@ public class UserInterceptor implements HandlerInterceptor {
             if (StpUtil.isLogin()) {
                 User user = new User();
                 user.setId(StpUtil.getLoginIdAsInt());
-                // 可以根据需要从token或其他地方获取更多用户信息
                 return user;
             }
-        } catch (Exception e) {
-            // 记录日志或处理异常
+        } catch (Exception ignored) {
+
         }
         return null;
     }

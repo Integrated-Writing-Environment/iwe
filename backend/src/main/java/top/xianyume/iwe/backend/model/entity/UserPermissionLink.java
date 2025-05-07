@@ -7,15 +7,16 @@ import java.time.LocalDateTime;
 
 /**
  * @author Xianyume
- * @date 2025/05/01 23:44
+ * @date 2025/05/05 21:43
  **/
 @Data
-@TableName("permission")
-public class Permission {
+@TableName("user_permission")
+public class UserPermissionLink {
     @TableId(type = IdType.AUTO)
     private Integer id;
-    // 可为空
-    private String permission;
+    private Integer userId;
+    private Integer permissionId;
+
     @TableLogic
     @TableField("is_deleted")
     private Integer deleted;

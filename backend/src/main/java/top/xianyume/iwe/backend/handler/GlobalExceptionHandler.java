@@ -39,5 +39,24 @@ public class GlobalExceptionHandler {
         return SaResult.error("token无效！请重新登录");
     }
 
+    @ExceptionHandler(RuntimeException.class)
+    public SaResult handleRuntimeException(RuntimeException ex) {
+        return SaResult.error(ex.getMessage());
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public SaResult handleIllegalArgumentException(IllegalArgumentException ex) {
+        return SaResult.error(ex.getMessage());
+    }
+
+//    @ExceptionHandler(NoHandlerFoundException.class)
+//    public SaResult handleNoHandlerFoundException(NoHandlerFoundException ex) {
+//        return SaResult.error(ex.getMessage());
+//    }
+//
+//    @ExceptionHandler(ConstraintViolationException.class)
+//    public SaResult handleConstraintViolationException(ConstraintViolationException ex) {
+//        return SaResult.error(ex.getMessage());
+//    }
 
 }

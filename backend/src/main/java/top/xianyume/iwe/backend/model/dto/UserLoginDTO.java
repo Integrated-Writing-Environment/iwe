@@ -19,4 +19,7 @@ public class UserLoginDTO implements Serializable {
     @Size(min = 4, max = 32, message = "密码长度必须在 4 到 32 个字符之间")
     private String password;
 
+    @NotBlank(message = "验证码不能为空")
+    private String verifyCode;
+
 }

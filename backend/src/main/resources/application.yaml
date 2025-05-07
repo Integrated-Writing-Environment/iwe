@@ -1,19 +1,29 @@
 server:
   port: 8080
+  servlet:
+    context-path: /api
 spring:
   application:
     name: "backend"
+  config:
+    import: "settings.yaml"
   datasource:
+    # 默认数据源
+    url: jdbc:mysql://localhost:3306/iwe?serverTimezone=UTC&createDatabaseIfNotExist=true
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: admin
-    url: jdbc:mysql://localhost:3306/iwe?serverTimezone=UTC
-#  sql:
-#    init:
-#      schema-locations: classpath:db/schema-h2.sql
-#      data-locations: classpath:db/data-h2.sql
+  sql:
+    init:
+      schema-locations: classpath:db/schema-mysql.sql
   main:
     banner-mode: off
+  ai:
+    openai:
+      base-url: https://api.deepseek.com/
+      chat:
+        options:
+          model: deepseek-chat
+          temperature: 0.7
+          max-tokens: 1000
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
@@ -21,7 +31,7 @@ mybatis-plus:
   global-config:
     banner: false
     db-config:
-      logic-delete-field: deleted
+      logic-delete-field: is_deleted
       logic-delete-value: 1
       logic-not-delete-value: 0
 sa-token:
@@ -44,3 +54,4 @@ sa-token:
 mybatis-plus-join:
   # 是否打印 mybatis-plus-join 的字符画
   banner: false
+debug: true
