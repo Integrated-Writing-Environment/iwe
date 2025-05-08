@@ -146,9 +146,9 @@ public class ArticleServiceImpl implements ArticleService {
         if (article == null) {
             throw new RuntimeException("文章不存在");
         }
-        Integer userId = StpUtil.getLoginIdAsInt();
+//        Integer userId = StpUtil.getLoginIdAsInt();
         articleMapper.deleteById(id);
-        userArticleLinkMapper.delete(new QueryWrapper<UserArticleLink>().eq("user_id", userId));
+        userArticleLinkMapper.delete(new QueryWrapper<UserArticleLink>().eq("article_id", id));
     }
 
     @Override
