@@ -163,7 +163,7 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("昵称长度必须在 4 到 32 个字符之间");
         } else if (user.getNickname().equals(nickname)) {
 
-        } else if (nickname.length() >= 32 || nickname.length() <= 4) {
+        } else if (nickname.length() > 32 || nickname.length() < 4) {
             throw new IllegalArgumentException("昵称长度必须在 4 到 32 个字符之间");
         } else if (userMapper.exists(new QueryWrapper<User>().eq("nickname", nickname))){
             throw new RuntimeException("昵称已存在");

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import top.xianyume.iwe.backend.model.dto.ArticleContentDTO;
 import top.xianyume.iwe.backend.model.dto.ArticleDTO;
 import top.xianyume.iwe.backend.model.dto.ToolCallDTO;
+import top.xianyume.iwe.backend.model.vo.ArticleVO;
 import top.xianyume.iwe.backend.service.intf.ArticleService;
 
 import java.util.List;
@@ -46,7 +47,7 @@ public class ArticleController {
             permission = @SaCheckPermission("article.get")
     )
     public SaResult getArticleInfo(@PathVariable Integer id) {
-        ArticleDTO article = articleService.getArticleInfo(id);
+        ArticleVO article = articleService.getArticleInfo(id);
         return SaResult.ok("获取文章成功")
                 .setData(article);
     }
@@ -61,7 +62,7 @@ public class ArticleController {
             @RequestParam(defaultValue = "1") Integer pageNum,
             @RequestParam(defaultValue = "20") Integer pageSize
     ) {
-        IPage<ArticleDTO> articleList = articleService.getArticleInfoList(title, pageNum, pageSize);
+        IPage<ArticleVO> articleList = articleService.getArticleInfoList(title, pageNum, pageSize);
         return SaResult.ok("获取文章列表成功")
                 .setData(articleList);
     }
@@ -141,6 +142,20 @@ public class ArticleController {
         String result = chatModel.call(prompt).getResult().getOutput().getText();
         return SaResult.ok("文章的小工具调用成功")
                 .setData(result);
+    }
+
+    @GetMapping("/me")
+    @SaCheckOr(
+            role = @SaCheckRole("user"),
+            permission = @SaCheckPermission("article.me")
+    )
+    public SaResult getMe(
+            @RequestParam(required = false) Integer id,
+            @RequestParam(defaultValue = "1") Integer pageNum,
+            @RequestParam(defaultValue = "20") Integer pageSize
+    ) {
+        return SaResult.ok("获取我的文章成功")
+                .setData(articleService.getMe(0, pageNum, pageSize));
     }
 }
 
