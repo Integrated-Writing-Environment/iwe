@@ -1,6 +1,5 @@
 package top.xianyume.iwe.backend.model.entity;
 
-import cn.hutool.json.JSON;
 import com.baomidou.mybatisplus.annotation.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -24,7 +23,7 @@ public class Article {
     @Size(max = 65535, message = "文章内容长度必须少于 65535 个字符")
     private String content;
     // 可为空
-    private JSON tools;
+    private String tools;
     @TableLogic
     @TableField("is_deleted")
     private Integer deleted;
