@@ -1,8 +1,6 @@
 package top.xianyume.iwe.backend.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil;
-import cn.hutool.json.JSON;
-import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -123,7 +121,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public JSON getToolList(Integer articleId) {
+    public String getToolList(Integer articleId) {
         if (articleId == null) {
             throw new IllegalArgumentException("文章ID不能为空");
         }
@@ -132,7 +130,7 @@ public class ArticleServiceImpl implements ArticleService {
             throw new RuntimeException("文章不存在");
         }
         if (article.getTools() == null) {
-            return JSONUtil.createArray();
+            return "";
         }
         return article.getTools();
     }
@@ -168,7 +166,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public void updateTool(Integer articleId, JSON tools) {
+    public void updateTool(Integer articleId, String tools) {
         if (articleId == null) {
             throw new IllegalArgumentException("文章ID不能为空");
         }
@@ -180,6 +178,7 @@ public class ArticleServiceImpl implements ArticleService {
             throw new IllegalArgumentException("工具列表不能为空");
         }
         article.setTools(tools);
+        System.out.println(article);
         articleMapper.updateById(article);
     }
 }

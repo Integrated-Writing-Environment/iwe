@@ -1,6 +1,5 @@
 package top.xianyume.iwe.backend.model.dto;
 
-import cn.hutool.json.JSON;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -18,7 +17,7 @@ public class ArticleDTO {
     private String title;
     @Size(max = 65538, message = "内容长度必须在 65538 以下")
     private String content;
-    private JSON tools;
+    private String tools;
 
     private Integer userId;
 }

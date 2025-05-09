@@ -1,6 +1,5 @@
 package top.xianyume.iwe.backend.model.vo;
 
-import cn.hutool.json.JSON;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -15,7 +14,7 @@ public class ArticleVO {
     private Integer id;
     private String title;
     private String content;
-    private JSON tools;
+    private String tools;
     private Integer userId;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
