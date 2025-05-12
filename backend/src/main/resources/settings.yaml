@@ -13,4 +13,4 @@ spring:
       mode: never
   ai:
     openai:
-      api-key: sk-f5d17c9584e94b1c992cd566f2e5b136
+      api-key: 
